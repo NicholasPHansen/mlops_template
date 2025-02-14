@@ -1,0 +1,40 @@
+{
+    "name": "{{ cookiecutter.repo_name }}_env",
+    "dockerFile": "Dockerfile",
+    "postCreateCommand": "pip install -r requirements_dev.txt",
+
+    "mounts": [
+        // Mount the raw data as READ-ONLY
+        "source=/path/to/raw/data,target=/workspaces/{{ cookiecutter.repo_name }}/raw,type=bind,consistency=cached,readonly",
+        // Mount the processed data as read/write
+        "source=/path/to/external/data,target=/workspaces/{{ cookiecutter.repo_name }}/processed,type=bind,consistency=cached"
+    ],
+
+    // Configure tool-specific properties.
+    "customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.black-formatter",
+				"ms-python.vscode-pylance",
+				"KevinRose.vsc-python-indent",
+				"ms-toolsai.jupyter",
+				"ms-python.isort"
+			],
+			"settings": {
+				"python.formatting.provider": "black",
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+						"source.organizeImports": "always"
+					},
+				"isort.args":["--profile", "black"]
+			}
+		  }
+	},
+
+    // If you want to add a GPU uncomment below
+    "runArgs": [
+    //    "--gpus",
+    //    "all"
+    ]
+}
