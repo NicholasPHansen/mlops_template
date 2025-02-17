@@ -1,0 +1,41 @@
+{
+    "name": "{{ cookiecutter.repo_name }}_env",
+    "dockerFile": "../dockerfiles/dev.dockerfile",
+ 
+    // If you need to mount the data and model folders, do so here:
+    "mounts": [
+        // Mount the raw data as READ-ONLY
+        // "source=/path/to/raw/data,target=/workspaces/{{ cookiecutter.repo_name }}/data/raw,type=bind,consistency=cached,readonly",
+        // Mount the processed data and models folders as read/write
+        // "source=/path/to/external/data,target=/workspaces/{{ cookiecutter.repo_name }}/data/processed,type=bind,consistency=cached",
+        // "source=/path/to/external/models,target=/workspaces/{{ cookiecutter.repo_name }}/models,type=bind,consistency=cached"
+    ],
+ 
+    // Configure tool-specific properties.
+    "customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.black-formatter",
+				"ms-python.vscode-pylance",
+				"KevinRose.vsc-python-indent",
+				"ms-toolsai.jupyter",
+				"ms-python.isort"
+			],
+			"settings": {
+				"python.formatting.provider": "black",
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+						"source.organizeImports": "always"
+					},
+				"isort.args":["--profile", "black"]
+			}
+		  }
+	},
+
+    // If you want to add a GPU uncomment below
+    "runArgs": [
+    //    "--gpus",
+    //    "all"
+    ]
+}
