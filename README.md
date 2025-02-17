@@ -1,8 +1,12 @@
-# 🍪 A up-to-date Cookiecutter template for MLOps
+# 🍪 A up-to-date Cookiecutter template for MLOps/Reproducible Data Science
 
-Inspired by the original [cookiecutter-data-science](https://cookiecutter-data-science.drivendata.org/v1/) template.
-This template is more opinionated regarding tools used. It has been updated to better fit machine learning-based
-projects and is being used as the core template in this [MLOps course](https://github.com/SkafteNicki/dtu_mlops).
+This template is based on the amazing work by [@SkafteNicki](https://github.com/SkafteNicki), with some slight modifications to suit my needs better.
+
+Changes involve:
+- Removal of API python and dockerfiles (I dont host stuff in cloud)
+- Integration of CookieCutter DataScience v2 quality of life stuff (`config.py` being one of them)
+- Added automatic `devcontainer.json` setup with data and models volume mounts
+- Converted dockerfiles into 2-stage builds, with a shared `base` stage for faster building,
 
 ## ✋ Requirements to use the template:
 
@@ -11,16 +15,10 @@ projects and is being used as the core template in this [MLOps course](https://g
 
 ## 🆕 Start a new project
 
-Start by creating a repository either using the GitHub GUI in the web browser or alternatively you can use the
-[GitHub command line interface](https://cli.github.com/) if you have set it up:
+On your local machine run
 
 ```bash
-gh repo create <repo_name> --public --confirm
-```
-Afterwards on your local machine run
-
-```bash
-cookiecutter https://github.com/SkafteNicki/mlops_template
+cookiecutter https://github.com/nicholasphansen/mlops_template
 ```
 
 You will be prompted with the following questions:
@@ -82,15 +80,14 @@ When the project is created, the repository will have the following structure:
 ├── src/                      # Source code
 │   ├── project_name/
 │   │   ├── __init__.py
-│   │   ├── api.py
+│   │   ├── config.py
 │   │   ├── data.py
 │   │   ├── evaluate.py
-│   │   ├── models.py
+│   │   ├── model.py
 │   │   ├── train.py
 │   │   └── visualize.py
 └── tests/                    # Tests
 │   ├── __init__.py
-│   ├── test_api.py
 │   ├── test_data.py
 │   └── test_model.py
 ├── .gitignore
@@ -118,8 +115,6 @@ files, shown in the diagram below with their respective connections:
 * `evaluate.py`: this file is responsible for evaluating the model. It should import the test data interface from
     `data.py` and load the trained model from the `models` folder. Output should be performance metrics of the trained
     model.
-* `api.py`: this file is responsible for serving the model. It should import the trained model from the `models` folder
-    and provide an interface for making predictions.
 * `visualize.py`: this file is responsible for visualizing the data and model. It should import the training/validation/
     test data interface from `data.py` and the trained model from the `models` folder. Output should be visualizations
     of the data and model.
@@ -157,13 +152,13 @@ src/
 
 🤖 Automated dependency updates with [Dependabot](https://github.com/dependabot)
 
-📝 Project tasks using [Invoke](https://www.pyinvoke.org/)
+📝 Project tasks using [Typer](https://typer.tiangolo.com/)
 
 and probably more that I have forgotten...
 
 ## ❕ License
 
-If you enjoy using the template, please consider giving credit by citing it.
+If you enjoy using the template, please consider giving credit to @SkafteNicki by citing it.
 You can use the following BibTeX entry:
 
 ```bibtex
