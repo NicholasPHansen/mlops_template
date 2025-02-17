@@ -1,3 +1,6 @@
+# General niceness
+ipykernel==6.29.5
+
 # commands
 invoke==2.2.0
 
