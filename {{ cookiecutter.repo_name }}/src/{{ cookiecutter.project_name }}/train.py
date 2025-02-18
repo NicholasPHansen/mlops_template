@@ -5,6 +5,8 @@ from loguru import logger
 from tqdm import tqdm
 
 from {{ cookiecutter.module_name }}.config import MODELS_DIR, PROCESSED_DATA_DIR
+from {{ cookiecutter.module_name }}.data import MyDataset
+from {{ cookiecutter.module_name }}.model import Model
 
 app = typer.Typer()
 

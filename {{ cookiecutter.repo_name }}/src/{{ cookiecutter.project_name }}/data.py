@@ -3,10 +3,30 @@ from pathlib import Path
 import typer
 from loguru import logger
 from tqdm import tqdm
+from torch.utils.data import Dataset
 
 from {{ cookiecutter.module_name }}.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
 
 app = typer.Typer()
+
+class MyDataset(Dataset):
+    """My custom dataset."""
+
+    def __init__(self, data_path: Path) -> None:
+        self.data_path = data_path
+
+    def __len__(self) -> int:
+        """Return the length of the dataset."""
+        pass
+
+    def __getitem__(self, index: int):
+        """Return a given sample from the dataset."""
+        pass
+
+    def preprocess(self, output_path: Path) -> None:
+        """Preprocess the raw data and save it to the output folder."""
+        pass
+
 
 
 @app.command()
@@ -16,14 +36,11 @@ def main(
     output_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
     # ----------------------------------------------
 ):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
     logger.info("Processing dataset...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
+    dataset = MyDataset(input_path)
+    dataset.preprocess(output_path)
     logger.success("Processing dataset complete.")
-    # -----------------------------------------
-
+    
 
 if __name__ == "__main__":
     app()
