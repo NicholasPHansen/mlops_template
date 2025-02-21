@@ -16,10 +16,10 @@
     // If you need to mount the data and model folders, do so here:
     "mounts": [
         // Mount the raw data as READ-ONLY
-        // "source=/path/to/raw/data,target=/workspaces/{{ cookiecutter.repo_name }}/data/raw,type=bind,consistency=cached,readonly",
+        // "source=/path/to/raw/data,target=/code/data/raw,type=bind,consistency=cached,readonly",
         // Mount the processed data and models folders as read/write
-        // "source=/path/to/external/data,target=/workspaces/{{ cookiecutter.repo_name }}/data/processed,type=bind,consistency=cached",
-        // "source=/path/to/external/models,target=/workspaces/{{ cookiecutter.repo_name }}/models,type=bind,consistency=cached"
+        // "source=/path/to/external/data,target=/code/data/processed,type=bind,consistency=cached",
+        // "source=/path/to/external/models,target=/code/models,type=bind,consistency=cached"
     ],
  
     // Configure tool-specific properties.

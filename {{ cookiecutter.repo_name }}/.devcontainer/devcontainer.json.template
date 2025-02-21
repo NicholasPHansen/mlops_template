@@ -11,7 +11,15 @@
 	"workspaceFolder": "/code",
 	// Mount the local workspace folder 
 	"workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind",
-
+    
+	// If you need to mount the data and model folders, do so here:
+    "mounts": [
+        // Mount the raw data as READ-ONLY
+        // "source=/path/to/raw/data,target=/code/data/raw,type=bind,consistency=cached,readonly",
+        // Mount the processed data and models folders as read/write
+        // "source=/path/to/external/data,target=/code/data/processed,type=bind,consistency=cached",
+        // "source=/path/to/external/models,target=/code/models,type=bind,consistency=cached"
+    ],
 
     // Configure tool-specific properties.
     "customizations": {
