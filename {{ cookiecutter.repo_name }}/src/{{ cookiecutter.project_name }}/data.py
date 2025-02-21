@@ -5,7 +5,7 @@ from loguru import logger
 from tqdm import tqdm
 from torch.utils.data import Dataset
 
-from {{ cookiecutter.module_name }}.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
+from {{ cookiecutter.project_name }}.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
 
 app = typer.Typer()
 
