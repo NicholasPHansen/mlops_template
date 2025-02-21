@@ -10,7 +10,7 @@ Changes involve:
 
 ## ✋ Requirements to use the template:
 
-* Python 3.11 or higher
+<!-- * Python 3.11 or higher -->
 * [cookiecutter](https://github.com/cookiecutter/cookiecutter) version 2.4.0 or higher
 
 ## 🆕 Start a new project
