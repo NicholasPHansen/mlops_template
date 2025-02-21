@@ -19,7 +19,7 @@ if iskeyword(project_name):
         "Project name must not be a built-in keyword, as it will cause syntax errors.",
     )
 
-min_version = "3.10"
+min_version = "3.8"
 max_version = "3.13"
 if not (ge(python_version, min_version) and le(python_version, max_version)):
     raise ValueError(
