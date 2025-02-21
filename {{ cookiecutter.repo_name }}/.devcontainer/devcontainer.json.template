@@ -1,14 +1,17 @@
 {
     "name": "{{ cookiecutter.repo_name }}_env",
-    "dockerFile": "Dockerfile",
-    "postCreateCommand": "pip install -r requirements_dev.txt",
+	"build": {
+        // Sets the run context to one level up instead of the .devcontainer folder.
+        "context": "..",
+        // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+        "dockerfile": "../dockerfiles/dev.dockerfile"
+    },
 
-    "mounts": [
-        // Mount the raw data as READ-ONLY
-        "source=/path/to/raw/data,target=/workspaces/{{ cookiecutter.repo_name }}/raw,type=bind,consistency=cached,readonly",
-        // Mount the processed data as read/write
-        "source=/path/to/external/data,target=/workspaces/{{ cookiecutter.repo_name }}/processed,type=bind,consistency=cached"
-    ],
+	// Define the default location for the source files in the container (Same as in ../Dockerfile)
+	"workspaceFolder": "/code",
+	// Mount the local workspace folder 
+	"workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind",
+
 
     // Configure tool-specific properties.
     "customizations": {

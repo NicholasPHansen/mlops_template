@@ -6,15 +6,14 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 
-WORKDIR /
+WORKDIR /code
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt --no-cache-dir --verbose
 
 FROM base AS dev
 
-COPY src /src/
-COPY pyproject.toml /pyproject.toml
-COPY requirements_dev.txt /requirements_dev.txt
+COPY src src/
+COPY pyproject.toml pyproject.toml
+COPY requirements_dev.txt requirements_dev.txt
 
-RUN pip install -r requirements_dev.txt --no-cache-dir --verbose
 RUN pip install -e .[dev]
