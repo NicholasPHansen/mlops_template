@@ -10,7 +10,7 @@ authors = [
   { name = {{ cookiecutter.author_name|tojson }}, email = "your@email.com" },
 ]
 {% if cookiecutter.open_source_license != 'No license file' %}license = { file = "LICENSE" }{% endif %}
-keywords = ["machine learning", "MLOps"]
+keywords = ["machine learning", "data science"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",
@@ -25,8 +25,15 @@ dependencies = {file = ["requirements.txt"]}
 [tool.setuptools.dynamic.optional-dependencies]
 dev = {file = ['requirements_dev.txt']}
 
-[tool.ruff]
+[tool.black]
 line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+)/
+'''
 
 [tool.ruff.lint]
 select = ["I", "N", "E", "W", ]
