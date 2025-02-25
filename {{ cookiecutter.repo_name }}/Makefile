@@ -10,7 +10,6 @@ PYTHON_INTERPRETER = python
 # COMMANDS                                                                      #
 #################################################################################
 
-{% if cookiecutter.dependency_file != 'none' %}
 ## Install Python Dependencies
 .PHONY: requirements
 requirements:
