@@ -26,14 +26,14 @@ clean:
 ## Lint using flake8 and black (use `make format` to do formatting)
 .PHONY: lint
 lint:
-	flake8 {{ cookiecutter.module_name }}
-	isort --check --diff --profile black {{ cookiecutter.module_name }}
-	black --check --config pyproject.toml {{ cookiecutter.module_name }}
+	flake8 {{ cookiecutter.project_name }}
+	isort --check --diff --profile black {{ cookiecutter.project_name }}
+	black --check --config pyproject.toml {{ cookiecutter.project_name }}
 
 ## Format source code with black
 .PHONY: format
 format:
-	black --config pyproject.toml {{ cookiecutter.module_name }}
+	black --config pyproject.toml {{ cookiecutter.project_name }}
 
 
 #################################################################################
@@ -43,22 +43,22 @@ format:
 ## Make Dataset
 .PHONY: data
 data:
-	$(PYTHON_INTERPRETER) src/{{ cookiecutter.module_name }}/dataset.py
+	$(PYTHON_INTERPRETER) src/{{ cookiecutter.project_name }}/dataset.py
 
 ## Train model
 .PHONY: train
 train:
-	$(PYTHON_INTERPRETER) src/{{ cookiecutter.module_name }}/train.py
+	$(PYTHON_INTERPRETER) src/{{ cookiecutter.project_name }}/train.py
 
 ## Evaluate model
 .PHONY: eval
 eval:
-	$(PYTHON_INTERPRETER) src/{{ cookiecutter.module_name }}/evaluate.py
+	$(PYTHON_INTERPRETER) src/{{ cookiecutter.project_name }}/evaluate.py
 
 ## Visualize model
 .PHONY: plots
 plots:
-	$(PYTHON_INTERPRETER) src/{{ cookiecutter.module_name }}/visualize.py
+	$(PYTHON_INTERPRETER) src/{{ cookiecutter.project_name }}/visualize.py
 
 
 #################################################################################
