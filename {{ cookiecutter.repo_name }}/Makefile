@@ -40,7 +40,6 @@ format:
 # PROJECT RULES                                                                 #
 #################################################################################
 
-# {% if cookiecutter.include_code_scaffold == 'Yes' %}
 ## Make Dataset
 .PHONY: data
 data:
@@ -60,7 +59,7 @@ eval:
 .PHONY: plots
 plots:
 	$(PYTHON_INTERPRETER) src/{{ cookiecutter.module_name }}/visualize.py
-# {% endif %}
+
 
 #################################################################################
 # Self Documenting Commands                                                     #
