@@ -4,6 +4,11 @@ from operator import ge, le
 project_name = "{{cookiecutter.project_name}}"
 python_version = "{{cookiecutter.python_version}}"
 
+
+def versiontuple(v):
+    return tuple(map(int, (v.split("."))))
+
+
 if not project_name.isidentifier() or not project_name.islower():
     raise ValueError(
         "\n"
@@ -21,7 +26,10 @@ if iskeyword(project_name):
 
 min_version = "3.8"
 max_version = "3.13"
-if not (ge(python_version, min_version) and le(python_version, max_version)):
+if not (
+    ge(versiontuple(python_version), versiontuple(min_version))
+    and le(versiontuple(python_version), versiontuple(max_version))
+):
     raise ValueError(
         f"Python version must be between {min_version} and {max_version}."
         " These are the versions that still receive support."
