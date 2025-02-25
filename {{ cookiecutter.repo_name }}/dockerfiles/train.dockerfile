@@ -14,6 +14,8 @@ FROM base AS trainer
 
 COPY src src/
 COPY pyproject.toml pyproject.toml
+COPY README.md README.md
+COPY LICENSE LICENSE
 
 RUN pip install . --no-deps --no-cache-dir --verbose
 

@@ -14,6 +14,8 @@ FROM base AS dev
 
 COPY src src/
 COPY pyproject.toml pyproject.toml
+COPY README.md README.md
+COPY LICENSE LICENSE
 COPY requirements_dev.txt requirements_dev.txt
 
 RUN pip install -e .[dev]

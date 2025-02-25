@@ -3,7 +3,7 @@
 #################################################################################
 
 PROJECT_NAME = {{ cookiecutter.repo_name }}
-PYTHON_VERSION = {{ cookiecutter.python_version_number }}
+PYTHON_VERSION = {{ cookiecutter.python_version }}
 PYTHON_INTERPRETER = python
 
 #################################################################################
