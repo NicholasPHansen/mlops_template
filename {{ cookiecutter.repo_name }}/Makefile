@@ -35,54 +35,6 @@ lint:
 format:
 	black --config pyproject.toml {{ cookiecutter.module_name }}
 
-# {% if not cookiecutter.dataset_storage.none %}
-# ## Download Data from storage system
-# .PHONY: sync_data_down
-# sync_data_down:
-# 	{% if cookiecutter.dataset_storage.s3 -%}
-# 	aws s3 sync s3://{{ cookiecutter.dataset_storage.s3.bucket }}/data/ \
-# 		data/ {% if cookiecutter.dataset_storage.s3.aws_profile != 'default' %} --profile {{ cookiecutter.dataset_storage.s3.aws_profile }}{% endif %}
-# 	{% elif cookiecutter.dataset_storage.azure -%}
-# 	az storage blob download-batch -s {{ cookiecutter.dataset_storage.azure.container }}/data/ \
-# 		-d data/
-# 	{% elif cookiecutter.dataset_storage.gcs -%}
-# 	gsutil -m rsync -r gs://{{ cookiecutter.dataset_storage.gcs.bucket }}/data/ data/
-# 	{% endif %}
-
-# ## Upload Data to storage system
-# .PHONY: sync_data_up
-# sync_data_up:
-# 	{% if cookiecutter.dataset_storage.s3 -%}
-# 	aws s3 sync data/ \
-# 		s3://{{ cookiecutter.dataset_storage.s3.bucket }}/data {% if cookiecutter.dataset_storage.s3.aws_profile != 'default' %} --profile {{ cookiecutter.dataset_storage.s3.aws_profile }}{% endif %}
-# 	{% elif cookiecutter.dataset_storage.azure -%}
-# 	az storage blob upload-batch -d {{ cookiecutter.dataset_storage.azure.container }}/data/ \
-# 		-s data/
-# 	{% elif cookiecutter.dataset_storage.gcs -%}
-# 	gsutil -m rsync -r data/ gs://{{ cookiecutter.dataset_storage.gcs.bucket }}/data/
-# 	{% endif %}
-# {% endif %}
-
-# {% if cookiecutter.environment_manager != 'none' %}
-# ## Set up python interpreter environment
-# .PHONY: create_environment
-# create_environment:
-# 	{% if cookiecutter.environment_manager == 'conda' -%}
-# 	{% if cookiecutter.dependency_file != 'environment.yml' %}
-# 	conda create --name $(PROJECT_NAME) python=$(PYTHON_VERSION) -y
-# 	{% else -%}
-# 	conda env create --name $(PROJECT_NAME) -f environment.yml
-# 	{% endif %}
-# 	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-# 	{% elif cookiecutter.environment_manager == 'virtualenv' -%}
-# 	@bash -c "if [ ! -z `which virtualenvwrapper.sh` ]; then source `which virtualenvwrapper.sh`; mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER); else mkvirtualenv.bat $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER); fi"
-# 	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
-# 	{% elif cookiecutter.environment_manager == 'pipenv' -%}
-# 	pipenv --python $(PYTHON_VERSION)
-# 	@echo ">>> New pipenv created. Activate with:\npipenv shell"
-# 	{% endif %}
-# {% endif %}
-
 
 #################################################################################
 # PROJECT RULES                                                                 #
