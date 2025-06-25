@@ -12,6 +12,13 @@ RUN pip install -r requirements.txt --no-cache-dir --verbose
 
 FROM base AS dev
 
+
+RUN apt update && \
+    apt install --no-install-recommends -y \
+    git \
+    tmux \
+    apt clean && rm -rf /var/lib/apt/lists/*
+
 COPY src src/
 COPY pyproject.toml pyproject.toml
 COPY README.md README.md
