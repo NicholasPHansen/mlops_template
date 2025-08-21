@@ -1,9 +1,9 @@
 # Base image
 FROM python:{{ cookiecutter.python_version }}-slim AS base
 
-RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+RUN apt update \
+    && apt install --no-install-recommends -y build-essential gcc  \
+    && apt clean && rm -rf /var/lib/apt/lists/*
 
 
 WORKDIR /code
@@ -17,7 +17,8 @@ RUN apt update && \
     apt install --no-install-recommends -y \
     git \
     tmux \
-    apt clean && rm -rf /var/lib/apt/lists/*
+    vim \
+    && apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY src src/
 COPY pyproject.toml pyproject.toml
