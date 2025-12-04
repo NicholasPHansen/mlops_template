@@ -1,4 +1,5 @@
 torch==2.5.1
+torch-tb-profiler==0.4.3
 typer==0.15.1
 loguru==0.7.3
 python-dotenv==1.0.1
