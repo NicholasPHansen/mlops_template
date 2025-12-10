@@ -1,8 +1,13 @@
 # Ignore machine specific container
-devcontainer.json
-
+*devcontainer.json
+dockerfiles/docker-compose.yml
 
 docs/site/
+
+# Data and report folders
+data/
+reports/
+
 
 # test cache
 manual_test/
