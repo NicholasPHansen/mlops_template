@@ -23,6 +23,7 @@ RUN apt-get update \
     git \
     tmux \
     vim \
+    openssh-client \
     && apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY requirements_dev.txt requirements_dev.txt
