@@ -1,3 +1,5 @@
+name: {{ cookiecutter.project_name }}app
+
 services:
   dev:
     container_name: dev-{{ cookiecutter.project_name }}
