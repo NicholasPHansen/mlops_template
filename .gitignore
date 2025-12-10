@@ -3,3 +3,4 @@ simple_repo/
 advance_repo/
 __pycache__/
 *.bkp
+.DS_Store
