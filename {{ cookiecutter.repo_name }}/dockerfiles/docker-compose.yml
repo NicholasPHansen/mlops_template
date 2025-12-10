@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  dev:
+    container_name: dev-{{ cookiecutter.project_name }}
+    image: {{ cookiecutter.project_name }}
+    build:
+      context: .
+      dockerfile: dockerfiles/train.dockerfile
+      target: dev
+    volumes:
+      - ..:/code:rw  # Mount the entire repo as read/write in the container
+      # Uncomment if you need to store the data/models elsewhere
+      # - ../data/raw:/data/raw:ro
+      # - ../data/processed:/data/processed:rw
+      # - ../models:/models:rw
+    # Keep the container running for development
+    tty: true
+    stdin_open: true
+    command: tail -f /dev/null
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+  
+  trainer: 
+    container_name: trainer-{{ cookiecutter.project_name }}
+    image: {{ cookiecutter.project_name }}
+    build:
+      context: ..
+      dockerfile: dockerfiles/Dockerfile
+      target: "trainer"
+    volumes:
+      - ../data/raw:/data/raw:ro
+      - ../data/processed:/data/processed:rw
+      - ../models:/models:rw
+    command: "python -u src/{{ cookiecutter.project_name }}/train.py"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
