@@ -60,6 +60,20 @@ eval:
 plots:
 	$(PYTHON_INTERPRETER) src/{{ cookiecutter.project_name }}/visualize.py
 
+## Build docker container
+.PHONY: build
+build:
+	docker compose -p {{ cookiecutter.project_name }}_app -f dockerfiles/docker-compose.yml build
+
+## Start the docker dev container
+.PHONY: container 
+container: build
+	docker compose -p {{ cookiecutter.project_name }}_app -f dockerfiles/docker-compose.yml up -d dev 
+
+## Start the docker trainer container
+.PHONY: container 
+trainer-container: build
+	docker compose -p {{ cookiecutter.project_name }}_app -f dockerfiles/docker-compose.yml up -d trainer
 
 #################################################################################
 # Self Documenting Commands                                                     #
