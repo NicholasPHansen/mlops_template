@@ -17,13 +17,32 @@ classifiers = [
 ]
 readme = "README.md"
 requires-python = ">={{ cookiecutter.python_version }}"
-dynamic = ["dependencies", "optional-dependencies"]
 
-[tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = [
+  "torch==2.5.1",
+  "torch-tb-profiler==0.4.3",
+  "typer==0.15.1",
+  "loguru==0.7.3",
+  "python-dotenv==1.0.1",
+  "tqdm==4.67.1",
+  "typer==0.15.1",
+]
 
-[tool.setuptools.dynamic.optional-dependencies]
-dev = {file = ['requirements_dev.txt']}
+[project.optional-dependencies]
+dev = [
+  "ipykernel==6.29.5",
+  "pre-commit==4.1.0",
+  "pytest==8.3.4",
+  "coverage==7.6.9",
+  "black==25.1.0",
+  "mkdocs==1.6.1",
+  "mkdocs-material==9.4.6",
+  "mkdocstrings-python==1.12.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["{{ cookiecutter.project_name }}*"]
 
 [tool.black]
 line-length = 120
