@@ -1,28 +1,13 @@
 {
-    "name": "{{ cookiecutter.repo_name }}_env",
-	"build": {
-        // Sets the run context to one level up instead of the .devcontainer folder.
-        "context": "..",
-        // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-        "dockerfile": "../dockerfiles/dev.dockerfile"
-    },
-
+	"name": "{{ cookiecutter.repo_name }}_env",
+	"dockerComposeFile": [
+		"../dockerfiles/docker-compose.yml"
+	],
+	"service": "dev",
 	// Define the default location for the source files in the container (Same as in ../Dockerfile)
 	"workspaceFolder": "/code",
-	// Mount the local workspace folder 
-	"workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind",
-    
-	// If you need to mount the data and model folders, do so here:
-    "mounts": [
-        // Mount the raw data as READ-ONLY
-        // "source=/path/to/raw/data,target=/code/data/raw,type=bind,consistency=cached,readonly",
-        // Mount the processed data and models folders as read/write
-        // "source=/path/to/external/data,target=/code/data/processed,type=bind,consistency=cached",
-        // "source=/path/to/external/models,target=/code/models,type=bind,consistency=cached"
-    ],
-
-    // Configure tool-specific properties.
-    "customizations": {
+	// Configure tool-specific properties.
+	"customizations": {
 		"vscode": {
 			"extensions": [
 				"ms-python.python",
@@ -36,16 +21,13 @@
 				"python.formatting.provider": "black",
 				"editor.formatOnSave": true,
 				"editor.codeActionsOnSave": {
-						"source.organizeImports": "always"
-					},
-				"isort.args":["--profile", "black"]
+					"source.organizeImports": "always"
+				},
+				"isort.args": [
+					"--profile",
+					"black"
+				]
 			}
-		  }
-	},
-
-    // If you want to add a GPU uncomment below
-    "runArgs": [
-    //    "--gpus",
-    //    "all"
-    ]
+		}
+	}
 }
