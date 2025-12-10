@@ -14,7 +14,7 @@ COPY README.md README.md
 COPY LICENSE LICENSE
 COPY requirements.txt requirements.txt
 
-RUN pip install . --no-deps --no-cache-dir --verbose
+RUN --mount=type=cache,target=/root/.cache/pip pip install . --no-deps --verbose
 
 FROM trainer AS dev
 
@@ -28,4 +28,4 @@ RUN apt-get update \
 
 COPY requirements_dev.txt requirements_dev.txt
 
-RUN pip install -e .[dev]
+RUN --mount=type=cache,target=/root/.cache/pip pip install -e .[dev]
