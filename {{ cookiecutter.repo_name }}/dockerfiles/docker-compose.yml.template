@@ -1,11 +1,13 @@
 services:
   dev:
     container_name: dev-{{ cookiecutter.project_name }}
-    image: {{ cookiecutter.project_name }}
+    image: {{ cookiecutter.project_name }}:dev
     build:
       context: .
       dockerfile: dockerfiles/train.dockerfile
       target: dev
+    networks:
+      - {{ cookiecutter.project_name }}-network # <-- Use the unique network
     volumes:
       - ..:/code:rw  # Mount the entire repo as read/write in the container
       # Uncomment if you need to store the data/models elsewhere
@@ -26,11 +28,13 @@ services:
   
   trainer: 
     container_name: trainer-{{ cookiecutter.project_name }}
-    image: {{ cookiecutter.project_name }}
+    image: {{ cookiecutter.project_name }}:trainer
     build:
       context: ..
       dockerfile: dockerfiles/Dockerfile
       target: "trainer"
+    networks:
+      - {{ cookiecutter.project_name }}-network # <-- Use the unique network
     volumes:
       - ../data/raw:/data/raw:ro
       - ../data/processed:/data/processed:rw
@@ -43,3 +47,9 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+
+# Define the network as external (or just defined)
+networks:
+  {{ cookiecutter.project_name }}-network:
+    name: {{ cookiecutter.project_name }}-network # <-- Explicitly name the network to ensure uniqueness
+    # driver: bridge # (Optional: default)
