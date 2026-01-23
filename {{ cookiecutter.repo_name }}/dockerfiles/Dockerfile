@@ -25,10 +25,9 @@ COPY .python-version .python-version
 COPY README.md README.md
 COPY LICENSE LICENSE
 
-# RUN --mount=type=cache,target=/root/.cache/pip pip install . 
-RUN --mount=type=cache,target=/root/.cache/pip uv sync --frozen
+RUN --mount=type=cache,target=/root/.cache/pip uv sync
 
 FROM trainer AS dev
 
 # Install the library in edit mode and install development tools
-RUN --mount=type=cache,target=/root/.cache/pip uv sync --frozen --dev
+RUN --mount=type=cache,target=/root/.cache/pip uv sync --dev
