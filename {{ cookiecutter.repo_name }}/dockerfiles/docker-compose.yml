@@ -5,8 +5,8 @@ services:
     container_name: dev-{{ cookiecutter.project_name }}
     image: {{ cookiecutter.project_name }}:dev
     build:
-      context: .
-      dockerfile: dockerfiles/train.dockerfile
+      context: ..
+      dockerfile: dockerfiles/Dockerfile
       target: dev
     networks:
       - {{ cookiecutter.project_name }}-network # <-- Use the unique network
@@ -41,7 +41,7 @@ services:
       - ../data/raw:/data/raw:ro
       - ../data/processed:/data/processed:rw
       - ../models:/models:rw
-    command: "python -u src/{{ cookiecutter.project_name }}/train.py"
+    command: "uv run src/{{ cookiecutter.project_name }}/train.py"
     deploy:
       resources:
         reservations:
