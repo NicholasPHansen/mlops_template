@@ -1,16 +1,12 @@
 from pathlib import Path
 
-import typer
 from loguru import logger
 from tqdm import tqdm
 
 from {{ cookiecutter.project_name }}.config import MODELS_DIR, PROCESSED_DATA_DIR
 
-app = typer.Typer()
 
-
-@app.command()
-def main(
+def evaluate_model(
     # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
     features_path: Path = PROCESSED_DATA_DIR / "test_features.csv",
     model_path: Path = MODELS_DIR / "model.pkl",
@@ -24,7 +20,3 @@ def main(
             logger.info("Something happened for iteration 5.")
     logger.success("Inference complete.")
     # -----------------------------------------
-
-
-if __name__ == "__main__":
-    app()

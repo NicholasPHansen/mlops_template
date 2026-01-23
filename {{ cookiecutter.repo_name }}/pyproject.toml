@@ -39,6 +39,9 @@ dev = [
   "mkdocstrings-python==1.12.2",
 ]
 
+[project.scripts]
+cli = "{{ cookiecutter.project_name }}.cli:cli"
+
 [tool.ruff]
 line-length = 120
 

@@ -1,6 +1,5 @@
 from pathlib import Path
 
-import typer
 from loguru import logger
 from tqdm import tqdm
 
@@ -8,11 +7,8 @@ from {{ cookiecutter.project_name }}.config import MODELS_DIR, PROCESSED_DATA_DI
 from {{ cookiecutter.project_name }}.data import MyDataset
 from {{ cookiecutter.project_name }}.model import Model
 
-app = typer.Typer()
 
-
-@app.command()
-def main(
+def train_model(
     # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
     features_path: Path = PROCESSED_DATA_DIR / "features.csv",
     labels_path: Path = PROCESSED_DATA_DIR / "labels.csv",
@@ -26,7 +22,3 @@ def main(
             logger.info("Something happened for iteration 5.")
     logger.success("Modeling training complete.")
     # -----------------------------------------
-
-
-if __name__ == "__main__":
-    app()
