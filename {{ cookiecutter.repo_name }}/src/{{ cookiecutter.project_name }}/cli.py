@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 from pathlib import Path
 import typer
@@ -55,14 +56,16 @@ def train(
 def test() -> None:
     """Run tests."""
     cmd = " ".join(["pytest", "tests/"])
-    run_command(cmd)
+    returncode, _ = run_command(cmd)
+    sys.exit(returncode)
 
 
 @cli.command()
 def format() -> None:
     """Format code."""
-    cmd = " ".join(["ruff", "format", "-v", "src/proj"])
-    run_command(cmd)
+    cmd = " ".join(["ruff", "format", "-v", "src/{{ cookiecutter.project_name }}"])
+    returncode, _ = run_command(cmd)
+    sys.exit(returncode)
 
 
 @cli.command()
