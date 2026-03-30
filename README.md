@@ -13,6 +13,28 @@ Changes involve:
 <!-- * Python 3.11 or higher -->
 * [cookiecutter](https://github.com/cookiecutter/cookiecutter) version 2.4.0 or higher
 
+## 📦 Dependency Management
+
+The template uses [uv](https://docs.astral.sh/uv/) with platform-aware lock files:
+
+```toml
+[tool.uv]
+environments = [
+  "sys_platform == 'linux' and platform_machine == 'aarch64'",
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+  "sys_platform == 'darwin' and platform_machine == 'arm64'",
+  "sys_platform == 'darwin' and platform_machine == 'x86_64'",
+]
+```
+
+This ensures `uv.lock` includes compatible wheels for all platforms. Generate it once on your Mac/Linux:
+
+```bash
+uv lock
+```
+
+The lock file works for local development and Docker builds — no platform-specific handling needed.
+
 ## 🆕 Start a new project
 
 On your local machine run
