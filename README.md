@@ -5,8 +5,8 @@ This template is based on the amazing work by [@SkafteNicki](https://github.com/
 Changes involve:
 - Removal of API python and dockerfiles (I dont host stuff in cloud)
 - Integration of CookieCutter DataScience v2 quality of life stuff (`config.py` being one of them)
-- Added automatic `devcontainer.json` setup with data and models volume mounts
-- Converted dockerfiles into 2-stage builds, with a shared `base` stage for faster building,
+- Added automatic `devcontainer.json` setup with data and models volume mounts (commented-out defaults)
+- Simplified Docker workflow: single-stage Dockerfile with optimized layer caching (dependencies cached separately from source code)
 
 ## ✋ Requirements to use the template:
 
@@ -66,9 +66,7 @@ When the project is created, the repository will have the following structure:
 ├── data/                     # Data directory
 │   ├── processed
 │   └── raw
-├── dockerfiles/              # Dockerfiles
-│   ├── api.Dockerfile
-│   └── train.Dockerfile
+├── Dockerfile                # Docker container configuration
 ├── docs/                     # Documentation
 │   ├── mkdocs.yml
 │   └── source/
@@ -132,6 +130,47 @@ src/
     │   ├── model1.py
     │   └── model2.py
     ├── ...
+```
+
+## 📋 Available Commands
+
+Once a project is created from the template, you can use the CLI to run various tasks. Use the `cli` command (as defined in `pyproject.toml`) to execute:
+
+```bash
+# Preprocess data from data/raw and save to data/processed
+cli data [--input-path PATH] [--output-path PATH]
+
+# Train the model
+cli train [--features-path PATH] [--labels-path PATH] [--model-path PATH]
+
+# Evaluate the trained model
+cli eval [--features-path PATH] [--model-path PATH] [--predictions-path PATH]
+
+# Generate visualizations
+cli plots [--input-path PATH] [--output-path PATH]
+
+# Run tests with pytest
+cli test
+
+# Format code with ruff
+cli format
+```
+
+**Examples:**
+
+```bash
+# Default behavior - preprocess data from data/raw to data/processed
+cli data
+
+# Custom data paths
+cli data --input-path ./my_raw_data --output-path ./my_processed_data
+
+# Train with default paths
+cli train
+
+# Run tests and format code
+cli test
+cli format
 ```
 
 ## 📚 The stack

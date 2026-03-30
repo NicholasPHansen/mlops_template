@@ -1,12 +1,17 @@
 {
 	"name": "{{ cookiecutter.repo_name }}_env",
-	"dockerComposeFile": [
-		"../dockerfiles/docker-compose.yml"
-	],
-	"service": "dev",
-	// Define the default location for the source files in the container (Same as in ../Dockerfile)
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"context": ".."
+	},
 	"workspaceFolder": "/code",
-	// Configure tool-specific properties.
+	"workspaceMount": "source=${localWorkspaceFolder},target=/code,type=bind,consistency=cached",
+	// "mounts": [
+	//     "source=${localWorkspaceFolder}/data/raw,target=/data/raw,type=bind,readonly",
+	//     "source=${localWorkspaceFolder}/data/processed,target=/data/processed,type=bind",
+	//     "source=${localWorkspaceFolder}/models,target=/models,type=bind"
+	// ],
+	"runArgs": ["--gpus", "all"],
 	"customizations": {
 		"vscode": {
 			"extensions": [

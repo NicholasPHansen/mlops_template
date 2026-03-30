@@ -59,7 +59,7 @@ After making changes to the template, test by:
   - `cli.py`: Typer-based CLI for project tasks
   - `config.py`: Configuration and directory paths
 - `{{ cookiecutter.repo_name }}/tests/`: pytest test files
-- `{{ cookiecutter.repo_name }}/dockerfiles/`: Multi-stage Dockerfile (base → trainer → dev)
+- `{{ cookiecutter.repo_name }}/Dockerfile`: Single-stage Docker build with optimized layer caching
 - `{{ cookiecutter.repo_name }}/.devcontainer/`: VS Code devcontainer configuration
 
 ## Architecture
@@ -75,15 +75,10 @@ After making changes to the template, test by:
 - **Linting & formatting**: ruff (configured in pyproject.toml)
 - **Testing**: pytest with coverage reporting
 - **CI/CD**: GitHub Actions workflows for tests (multi-OS, multi-Python version) and code linting
-- **Containerization**: Docker with 2-stage builds
-  - `base` stage: Ubuntu jammy + uv + build tools
-  - `trainer` stage: Installs project dependencies
-  - `dev` stage: Adds dev dependencies for interactive development
-- **Development**: DevContainer with docker-compose, GPU support, VS Code extensions
-
-**Docker Compose Services** (in generated projects):
-- `dev`: Interactive development container with repo mounted, GPU support
-- `trainer`: Isolated trainer container for reproducible model training
+- **Containerization**: Single-stage Docker build (Ubuntu jammy + uv + build tools) with optimized layer caching
+  - Dependency manifests (`pyproject.toml`, `.python-version`, etc.) copied first and installed with `uv sync --no-install-project` (cached until dependencies change)
+  - Source code copied after for fast rebuilds when only code changes
+- **Development**: DevContainer with VS Code extensions, GPU support, and commented-out volume mount options for data/models directories
 
 ## Important Notes
 
@@ -110,6 +105,6 @@ When modifying the template:
 - Update pytest, ruff, or coverage configuration in `pyproject.toml`
 
 **Changing Docker base image or Python version**:
-- Edit `{{ cookiecutter.repo_name }}/dockerfiles/Dockerfile`
+- Edit `{{ cookiecutter.repo_name }}/Dockerfile`
 - Update `.python-version` file (used by uv)
 - Update `pyproject.toml` with `requires-python` constraint

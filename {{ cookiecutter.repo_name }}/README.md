@@ -14,10 +14,7 @@ The directory structure of the project looks like this:
 ├── data/                       # Data directory
 │   ├── processed
 │   └── raw
-├── dockerfiles/                # Dockerfiles
-│   ├── Dockerfile
-│   ├── docker-compose.yml.template
-│   └── docker-compose.yml      # Ignored by git to make sure to copy from the template
+├── Dockerfile                  # Docker container configuration
 ├── docs/                       # Documentation
 │   ├── mkdocs.yml
 │   └── source/
