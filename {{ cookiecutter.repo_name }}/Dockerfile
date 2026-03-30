@@ -1,21 +1,16 @@
-FROM python:3.11-slim AS base
-
-# Add uv
-COPY --from=ghcr.io/astral-sh/uv:0.9.18 /uv /uvx /bin/
-
-RUN apt-get update && \
-  apt-get install --no-install-recommends -y \
-  make \
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
+FROM ghcr.io/astral-sh/uv:python{{ cookiecutter.python_version }}-alpine AS base
 
 WORKDIR /code
 
-COPY pyproject.toml uv.lock ./
+COPY uv.lock pyproject.toml ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \
   uv sync --frozen --no-install-project
 
 COPY src src/
+COPY README.md README.md
+COPY LICENSE LICENSE
 
 RUN --mount=type=cache,target=/root/.cache/uv \
   uv sync --frozen
+
