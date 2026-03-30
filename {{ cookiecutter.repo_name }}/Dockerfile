@@ -1,27 +1,21 @@
-FROM ubuntu:jammy
+FROM python:3.11-slim AS base
 
-RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
-    --mount=target=/var/cache/apt,type=cache,sharing=locked \
-    apt update && \
-    apt install --no-install-recommends -y build-essential gcc git openssh-client curl ca-certificates && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+# Add uv
+COPY --from=ghcr.io/astral-sh/uv:0.9.18 /uv /uvx /bin/
 
-# Download and install uv
-ADD https://astral.sh/uv/install.sh /uv-installer.sh
-RUN sh /uv-installer.sh && rm /uv-installer.sh
-ENV PATH="/root/.local/bin/:$PATH"
+RUN apt-get update && \
+  apt-get install --no-install-recommends -y \
+  make \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /code
 
-# Copy dependency manifests first for layer caching
-COPY pyproject.toml pyproject.toml
-COPY .python-version .python-version
-COPY README.md README.md
-COPY LICENSE LICENSE
+COPY pyproject.toml uv.lock ./
 
-# Install dependencies (cached until pyproject.toml changes)
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --no-install-project
+RUN --mount=type=cache,target=/root/.cache/uv \
+  uv sync --frozen --no-install-project
 
-# Copy source code and install project
 COPY src src/
-RUN --mount=type=cache,target=/root/.cache/uv uv sync
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+  uv sync --frozen
