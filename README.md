@@ -33,6 +33,16 @@ This ensures `uv.lock` includes compatible wheels for all platforms. Generate it
 uv lock
 ```
 
+**Generating `uv.lock` via Docker:**
+
+If you don't have `uv` installed locally, you can generate the lock file using Docker:
+
+```bash
+docker run --rm -v "$(pwd):/code" ghcr.io/astral-sh/uv:python3.11-alpine lock
+```
+
+This mounts your current directory and runs `uv lock` inside the container, writing the `uv.lock` file to your project directory. Adjust the Python version tag (e.g., `python3.12-alpine`) as needed.
+
 The lock file works for local development and Docker builds — no platform-specific handling needed.
 
 ## 🆕 Start a new project

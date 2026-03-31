@@ -68,6 +68,16 @@ uv sync --dev       # Include dev dependencies
 - Run `uv lock` to generate `uv.lock` (includes wheels for macOS and Linux)
 - Commit both `pyproject.toml` and `uv.lock` to version control
 
+**Generating `uv.lock` via Docker:**
+
+If you don't have `uv` installed locally, generate the lock file using Docker:
+
+```bash
+docker run --rm -v "$(pwd):/code" ghcr.io/astral-sh/uv:python{{ cookiecutter.python_version }}-alpine lock
+```
+
+This mounts your current directory and runs `uv lock` inside the container, writing the `uv.lock` file to your project.
+
 The `uv.lock` file is **platform-aware** (includes wheels for macOS-aarch64, macOS-x86_64, linux-aarch64, and linux-x86_64), ensuring reproducible installs locally and in Docker.
 
 ## CLI
