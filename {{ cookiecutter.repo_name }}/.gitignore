@@ -7,7 +7,8 @@ docs/site/
 # Data and report folders
 data/
 reports/
-
+# Never track the environment variables
+.env
 
 # test cache
 manual_test/
@@ -146,7 +147,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
