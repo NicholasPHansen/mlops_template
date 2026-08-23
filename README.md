@@ -105,7 +105,8 @@ When the project is created, the repository will have the following structure:
 │       └── index.md
 ├── models/                   # Trained models
 ├── notebooks/                # Jupyter notebooks
-├── reports/                  # Reports
+├── references/               # Data dictionaries, manuals, and all other explanatory materials
+├── reports/                  # Generated analysis (e.g. HTML, PDF, LaTeX) - not tracked in git
 │   └── figures/
 ├── src/                      # Source code
 │   ├── project_name/

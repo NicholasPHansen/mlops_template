@@ -21,7 +21,8 @@ The directory structure of the project looks like this:
 │       └── index.md
 ├── models/                     # Trained models
 ├── notebooks/                  # Jupyter notebooks
-├── reports/                    # Reports
+├── references/                 # Data dictionaries, manuals, and all other explanatory materials
+├── reports/                    # Generated analysis (e.g. HTML, PDF, LaTeX) - not tracked in git
 │   └── figures/
 ├── src/                        # Source code
 │   ├── project_name/
