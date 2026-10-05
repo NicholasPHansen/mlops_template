@@ -1,8 +1,11 @@
+import shutil
 from keyword import iskeyword
 from operator import ge, le
+from pathlib import Path
 
 project_name = "{{cookiecutter.project_name}}"
 python_version = "{{cookiecutter.python_version}}"
+use_dvc = "{{cookiecutter.use_dvc}}" == "yes"
 
 
 def versiontuple(v):
@@ -35,3 +38,9 @@ if not (
         " These are the versions that still receive support."
         " You can read more about Python versioning here: https://devguide.python.org/versions/",
     )
+
+if not use_dvc:
+    # DVC support is optional: drop every DVC-only file so non-DVC projects carry no trace of it.
+    for path in ("dvc.yaml", "params.yaml", ".dvcignore", "tests/test_dvc.py"):
+        Path(path).unlink(missing_ok=True)
+    shutil.rmtree(".dvc", ignore_errors=True)

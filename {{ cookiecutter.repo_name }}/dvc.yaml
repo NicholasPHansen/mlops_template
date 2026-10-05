@@ -1,0 +1,51 @@
+# Cached pipeline. Run `dvc repro` to execute only the stages whose inputs changed.
+# `cli run-pipeline` runs the same stages without caching; src/{{ cookiecutter.project_name }}/pipeline.py is the source of truth
+# for stage names, order and outputs, and tests/test_dvc.py fails if this file drifts from it.
+#
+# `deps` must list every project module a stage imports (DVC does not trace imports), otherwise editing that
+# module will not rerun the stage. Keep them in sync with the imports in each stage's module.
+stages:
+  data:
+    cmd: uv run cli data
+    deps:
+      - data/raw
+      - src/{{ cookiecutter.project_name }}/config.py
+      - src/{{ cookiecutter.project_name }}/data.py
+    outs:
+      - data/processed/features.csv
+      - data/processed/labels.csv
+      - data/processed/test_features.csv
+      - data/processed/dataset.csv
+
+  train:
+    cmd: uv run cli train
+    deps:
+      - data/processed/features.csv
+      - data/processed/labels.csv
+      - src/{{ cookiecutter.project_name }}/config.py
+      - src/{{ cookiecutter.project_name }}/data.py
+      - src/{{ cookiecutter.project_name }}/model.py
+      - src/{{ cookiecutter.project_name }}/train.py
+    params:
+      - train
+    outs:
+      - models/model.pkl
+
+  eval:
+    cmd: uv run cli eval
+    deps:
+      - models/model.pkl
+      - data/processed/test_features.csv
+      - src/{{ cookiecutter.project_name }}/config.py
+      - src/{{ cookiecutter.project_name }}/evaluate.py
+    outs:
+      - data/processed/test_predictions.csv
+
+  plots:
+    cmd: uv run cli plots
+    deps:
+      - data/processed/dataset.csv
+      - src/{{ cookiecutter.project_name }}/config.py
+      - src/{{ cookiecutter.project_name }}/visualize.py
+    outs:
+      - reports/figures/plot.png

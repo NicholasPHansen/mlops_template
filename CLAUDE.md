@@ -56,7 +56,8 @@ After making changes to the template, test by:
   - `train.py`: Training logic
   - `evaluate.py`: Model evaluation
   - `visualize.py`: Data and model visualization
-  - `cli.py`: Typer-based CLI for project tasks
+  - `cli.py`: Typer-based CLI for project tasks, including `run-pipeline`
+  - `pipeline.py`: `STAGES` registry (stage order and declared outputs) and `run_stages`; single source of truth for the pipeline
   - `config.py`: Configuration and directory paths
 - `{{ cookiecutter.repo_name }}/tests/`: pytest test files
 - `{{ cookiecutter.repo_name }}/Dockerfile`: Single-stage Docker build with optimized layer caching
@@ -65,7 +66,7 @@ After making changes to the template, test by:
 ## Architecture
 
 **Template Configuration** (`cookiecutter.json`):
-- Defines prompts for: repo_name, project_name, author_name, description, python_version, license
+- Defines prompts for: repo_name, project_name, author_name, description, python_version, license, use_dvc
 - Specifies which files to skip Jinja2 rendering (GitHub workflows)
 
 **Generated Project Stack:**
@@ -92,10 +93,17 @@ When modifying the template:
 6. **pre-commit hooks**: Template includes hooks for trailing whitespace, docstrings, codespell, and pyproject validation
 7. **Badge-ready**: README and workflows are ready for GitHub badges and status checks
 
+## Optional DVC (`use_dvc`)
+
+`use_dvc` (`no` default / `yes`) is applied in two ways: Jinja conditionals in `.gitignore`, `pyproject.toml`, `config.py` (`load_params`), `train.py`, `pipeline.py` and `README.md`, and `hooks/post_gen_project.py`, which deletes `dvc.yaml`, `params.yaml`, `.dvc/`, `.dvcignore` and `tests/test_dvc.py` when it is `no`. When adding a DVC-only file, add it to that hook's removal list. `tests/test_dvc.py` in generated projects enforces that `dvc.yaml` matches `STAGES`, so changing a stage means editing `pipeline.py`, `dvc.yaml` and (for new params) `params.yaml` together.
+
 ## Common Modifications
 
 **Adding a new dependency to all generated projects**:
 - Edit `pyproject.toml` and add to `dependencies` or `[dependency-groups].dev`
+
+**Adding a pipeline stage**:
+- Add the stage function and CLI command, append a `Stage` to `STAGES` in `pipeline.py` (name must equal the CLI command), and with DVC enabled add the matching stage to `dvc.yaml`
 
 **Adding a new CLI command to generated projects**:
 - Add a function in `{{ cookiecutter.repo_name }}/src/{{ cookiecutter.project_name }}/cli.py` decorated with `@cli.command()`
