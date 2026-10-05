@@ -43,11 +43,12 @@ dev = [
 cli = "{{ cookiecutter.project_name }}.cli:cli"
 
 [tool.uv]
+# torch==2.5.1 ships no macOS x86_64 wheel, so that platform is left out; `uv lock`
+# would otherwise fail to resolve for everyone, including inside Docker.
 environments = [
   "sys_platform == 'linux' and platform_machine == 'aarch64'",
   "sys_platform == 'linux' and platform_machine == 'x86_64'",
   "sys_platform == 'darwin' and platform_machine == 'arm64'",
-  "sys_platform == 'darwin' and platform_machine == 'x86_64'",
 ]
 
 [tool.ruff]

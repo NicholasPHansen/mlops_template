@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:python{{ cookiecutter.python_version }}-alpine AS base
+FROM ghcr.io/astral-sh/uv:python{{ cookiecutter.python_version }}-bookworm-slim AS base
 
 WORKDIR /code
 
