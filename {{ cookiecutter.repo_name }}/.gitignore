@@ -4,10 +4,12 @@ dockerfiles/docker-compose.yml
 
 docs/site/
 
-# Data and report folders
+{% if cookiecutter.use_dvc == 'yes' %}# data/, models/model.pkl and reports/ are managed by DVC: it writes the matching .gitignore entries itself,
+# so they must NOT be ignored here (dvc add/repro refuse paths that git ignores).
+{% else %}# Data and report folders
 data/
 reports/
-# Never track the environment variables
+{% endif %}# Never track the environment variables
 .env
 
 # test cache

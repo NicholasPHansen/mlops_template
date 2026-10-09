@@ -37,6 +37,9 @@ dev = [
   "mkdocs==1.6.1",
   "mkdocs-material==9.4.6",
   "mkdocstrings-python==1.12.2",
+{%- if cookiecutter.use_dvc == 'yes' %}
+  "dvc>=3.50,<4",
+{%- endif %}
 ]
 
 [project.scripts]

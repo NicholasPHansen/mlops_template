@@ -4,7 +4,14 @@ from loguru import logger
 from tqdm import tqdm
 from torch.utils.data import Dataset
 
-from {{ cookiecutter.project_name }}.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
+from {{ cookiecutter.project_name }}.config import (
+    DATASET_PATH,
+    FEATURES_PATH,
+    LABELS_PATH,
+    PROCESSED_DATA_DIR,
+    RAW_DATA_DIR,
+    TEST_FEATURES_PATH,
+)
 
 class MyDataset(Dataset):
     """My custom dataset."""
@@ -27,11 +34,16 @@ class MyDataset(Dataset):
 
 def preprocess_data(
     # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = RAW_DATA_DIR / "dataset.csv",
-    output_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
+    input_path: Path = RAW_DATA_DIR,
+    output_path: Path = PROCESSED_DATA_DIR,
     # ----------------------------------------------
 ):
     logger.info("Processing dataset...")
     dataset = MyDataset(input_path)
     dataset.preprocess(output_path)
+    # ---- REPLACE: placeholder artefacts so the pipeline runs end to end out of the box ----
+    output_path.mkdir(parents=True, exist_ok=True)
+    for artefact in (FEATURES_PATH, LABELS_PATH, TEST_FEATURES_PATH, DATASET_PATH):
+        (output_path / artefact.name).touch()
+    # ---------------------------------------------------------------------------------------
     logger.success("Processing dataset complete.")

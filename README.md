@@ -56,16 +56,20 @@ cookiecutter https://github.com/nicholasphansen/mlops_template
 You will be prompted with the following questions:
 
 ```txt
-    [1/6] repo_name (repo_name):
-    [2/6] project_name (project_name):
-    [3/6] author_name (Your name (or your organization/company/team)):
-    [4/6] description (A short description of the project.):
-    [5/6] python_version (3.11):
-    [6/6] Select open_source_license
+    [1/7] repo_name (repo_name):
+    [2/7] project_name (project_name):
+    [3/7] author_name (Your name (or your organization/company/team)):
+    [4/7] description (A short description of the project.):
+    [5/7] python_version (3.11):
+    [6/7] Select open_source_license
         1 - No license file
         2 - MIT
         3 - BSD-3-Clause
         Choose from [1/2/3] (1):
+    [7/7] Select use_dvc
+        1 - no
+        2 - yes
+        Choose from [1/2] (1):
 ```
 
 Where you should input starting values for the project. When asked for the repository name when creating the template,
@@ -84,6 +88,12 @@ git commit -m "init cookiecutter project"
 git remote add origin https://github.com/<username>/<repo_name>
 git push origin master
 ```
+
+### Optional: DVC
+
+Answering `yes` to `use_dvc` adds [DVC](https://dvc.org) on top of the pipeline: `dvc.yaml` (cached stages), `params.yaml` (tracked hyperparameters), a pre-initialised `.dvc/` directory, `dvc` as a dev dependency, and a test that keeps `dvc.yaml` in sync with the stage registry. It also removes `data/` and `reports/` from `.gitignore`, since DVC manages those ignore entries itself. Answering `no` (the default) generates none of this.
+
+Independently of DVC, every project gets `uv run cli run-pipeline [--from STAGE] [--to STAGE]`, which runs the stages declared in `src/<project_name>/pipeline.py` in order without caching.
 
 ## 🗃️ Repository structure
 

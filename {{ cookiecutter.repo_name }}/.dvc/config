@@ -1,0 +1,7 @@
+# DVC project config. Add a remote to share data and models, for example an S3-compatible store such as MinIO
+# (needs `uv add "dvc[s3]"`):
+#
+#   dvc remote add -d storage s3://<bucket>/<path>
+#   dvc remote modify storage endpointurl https://<minio-host>:9000
+#   dvc remote modify --local storage access_key_id <KEY>        # --local keeps secrets out of git
+#   dvc remote modify --local storage secret_access_key <SECRET>

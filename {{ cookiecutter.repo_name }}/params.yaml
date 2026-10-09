@@ -1,0 +1,4 @@
+# Hyperparameters, read in code via config.load_params("<section>") and tracked by DVC.
+# Changing a value here reruns only the stages that declare the section under `params:` in dvc.yaml.
+train:
+  epochs: 10
